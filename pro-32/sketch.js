@@ -5,23 +5,13 @@ const Constraint = Matter.Constraint;
 
 var engine, world;
 var backgroundImg;
+var hour;
 
-var bg ;
+var bg = "sunrise1.png";
 
 function preload() {
     // create getBackgroundImg( ) here
-    sunrise1 = loadImage("image/sunrise1.png");
-    sunrise2 = loadImage("image/sunrise2.png");
-    sunrise3 = loadImage("image/sunrise3.png");
-    sunrise4 = loadImage("image/sunrise4.png");
-    sunrise5 = loadImage("image/sunrise5.png");
-    sunrise6 = loadImage("image/sunrise6.png");
-    sunset7 = loadImage("image/sunset7.png");
-    sunset8 = loadImage("image/sunset8.png");
-    sunset9 = loadImage("image/sunset9.png");
-    sunset10 = loadImage("image/sunset10.png");
-    sunset11 = loadImage("image/sunset11.png");
-    sunset12 = loadImage("image/sunset12.png");
+    getBackgroundImg();
 }
 
 function setup(){
@@ -32,47 +22,78 @@ function setup(){
 }
 
 function draw(){
-
-    // add condition to check if any background image is there to add
-
+     // add condition to check if any background image is there to add
+    if(backgroundImg)
+    background(backgroundImg);
 
     Engine.update(engine);
-
     // write code to display time in correct format here
+    fill("black");
+    textSize(30);
 
+    if(hour>=12){
+        text("Time : "+ hour%12 + " PM", 50,100);
+       }else if(hour==0){
+         text("Time : 12 AM",100,100);
+       }else{
+        text("Time : "+ hour%12 + " AM", 50,100);
+       }
 
 }
 
 async function getBackgroundImg(){
 
     // write code to fetch time from API
-    var response = await fetch("http://worldtimeapi.org/api/timezone/Asia/Kolkata")
+    var response = await fetch("http://worldtimeapi.org/api/timezone/Asia/Kolkata");
 
     //change the data in JSON format
     var responseJSON = await response.json();
     var datetime = responseJSON.datetime;
-
+    
     // write code slice the datetime
-    hour = datetime.silce(11,13);
-    console.log(hour);
-
+    hour = datetime.slice(11,13);
 
     // add conditions to change the background images from sunrise to sunset
-    if (hour>=04 && hour<=06){
+    if(hour>=04 && hour<=06 ){
+        debugger;
         bg = "sunrise1.png";
-    }else if (hour>=06 && hour<=08){
+    }else if(hour>=06 && hour<=08 ){
+        debugger;
         bg = "sunrise2.png";
-    }else if (hour>=23 && hour===0){
+    }else if(hour>=08 && hour<=11 ){
+        debugger;
+        bg = "sunrise3.png";
+    }else if(hour>=11 && hour<=13){
+        debugger;
+        bg = "sunrise4.png";
+    }else if(hour>=13 && hour<=15){
+        debugger;
+        bg = "sunrise5.png";
+    }else if(hour>=15 && hour<=17 ){
+        debugger;
+        bg = "sunrise6.png";
+    }else if(hour>=17 && hour<=18 ){
+        debugger;
+        bg = "sunset7.png";
+    }else if(hour>=18 && hour<=20 ){
+        debugger;
+        bg = "sunset8.png";
+    }else if(hour>=20 && hour<=23 ){
+        debugger;
+        bg = "sunset9.png";
+    }else if(hour>=23 && hour==0){
+        debugger;
         bg = "sunset10.png";
-    }else if (hour===0 && hour<=03){
+    }else if(hour==0 && hour<=03){
+        debugger;
         bg = "sunset11.png";
     }else{
+        debugger;
         bg = "sunset12.png";
     }
 
-
     //load the image in backgroundImg variable here
     backgroundImg = loadImage(bg);
-    console.log(backgroundImg);
-
 }
+
+
